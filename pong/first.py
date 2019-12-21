@@ -11,8 +11,6 @@ branco=(255,255,255)
 vermelho=(255,0,0)
 y=210
 z=210
-Qx=300
-Qy=230
 Xy = 100
 
 pygame.font.init()
@@ -20,16 +18,16 @@ pygame.font.init()
 font = pygame.font.SysFont(None,50)
 
 
-block = pygame.Rect(Qx, Qy, 20, 20)
+block = pygame.Rect(300, 230, 20, 20)
 
-vx = 0.4
+vx = 0.5
 vy = 0
 
 clock = pygame.time.Clock()
 
 fim = False
 
-while True:
+while fim == False:
     event = pygame.event.poll()
 
     if event.type == pygame.QUIT:
@@ -60,6 +58,8 @@ while True:
         
     if block.collidelist(pads) >= 0:
         vx = -vx
+        pygame.mixer.music.load('colision.mp3')
+        pygame.mixer.music.play()
         if y < 320:
             vy = 1
         if y > 320:
@@ -137,15 +137,16 @@ while True:
 
 
     jogo()
+    
+    pygame.display.update()
 
-    while fim:
-        
-        event = pygame.event.poll()
+while fim:
+    event = pygame.event.poll()
 
-        if event.type == pygame.QUIT:
-            break
-        screen.fill((255,255,255))
-        texto(ganhador+' Ganhou o jogo!', preto)
-        pygame.display.update()
+    if event.type == pygame.QUIT:
+        break
+
+    texto(ganhador+' Ganhou o jogo!', preto)
 
     pygame.display.update()
+        
