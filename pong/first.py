@@ -17,10 +17,12 @@ pygame.font.init()
 
 font = pygame.font.SysFont(None,50)
 
+endFont = pygame.font.SysFont(None,30)
+
 
 block = pygame.Rect(300, 230, 20, 20)
 
-vx = 0.5
+vx = 0.6
 vy = 0
 
 clock = pygame.time.Clock()
@@ -35,17 +37,17 @@ while fim == False:
 
     left_pad = pygame.Rect(25, y, 20, 90)
     right_pad = pygame.Rect(600, z, 20, 90)
-    a = pygame.Rect(1, 0, 20, 480)
+    a = pygame.Rect(0, 0, 20, 480)
     b = pygame.Rect(625, 0, 20, 480)
     c = pygame.Rect(0, 470, 650, 20)
     d = pygame.Rect(0, -10, 650, 20)
 
-    text = font.render(str(p1)+' - '+str(p2), 1, preto)
+    text = font.render(str(p1)+' - '+str(p2), 1, (255,255,255))
 
     pads = [left_pad, right_pad]
 
     def texto(msg,cor):
-        texto = font.render(msg, True, cor)
+        texto = endFont.render(msg, True, (255,255,255))
         screen.blit(texto, (100, 240))
 
     def jogo():
@@ -64,6 +66,8 @@ while fim == False:
             vy = 1
         if y > 320:
             vy = -1
+        if y == 320:
+            vy = 1
 
 
     if block.colliderect(b):
@@ -84,15 +88,19 @@ while fim == False:
     if block.colliderect(d):
         vy = vy + 1
 
-    screen.fill((255,255,255))
+    screen.fill(preto)
 
-    pygame.draw.rect(screen, preto, left_pad)
+    pygame.draw.rect(screen, (0,255,0), left_pad)
+
+    pygame.draw.rect(screen, preto, a)
+
+    pygame.draw.rect(screen, preto, b)
 
     pygame.draw.rect(screen, preto, c)
 
     pygame.draw.rect(screen, preto, d)
         
-    pygame.draw.rect(screen, preto, right_pad)
+    pygame.draw.rect(screen, (0,255,0), right_pad)
         
     pygame.draw.rect(screen, vermelho, block)
 
@@ -146,7 +154,12 @@ while fim:
     if event.type == pygame.QUIT:
         break
 
-    texto(ganhador+' Ganhou o jogo!', preto)
+    texto(ganhador+' Ganhou o jogo! Clique S para sair', preto)
+
+    keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_s]:
+        fim = False
 
     pygame.display.update()
         
